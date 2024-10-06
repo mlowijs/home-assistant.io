@@ -55,8 +55,24 @@ In order to be able to use this integration, you'll need to sign up for a free T
    - **Callback URL**: `https://my.home-assistant.io/redirect/oauth`.
 4. Click on "Create App" to complete the creation process.
 5. Open the "[My Apps](https://developer.toon.eu/user/me/apps)" page again and click on the app that you've just created.
-6. You need the codes now shown: "Consumer Key" and "Consumer Secret".
-7. Add the following Toon configuration to your {% term "`configuration.yaml`" %} and restart Home Assistant.
+6. Write down the "Consumer Key" and "Consumer Secret".
+
+## Configuring Home Assistant
+
+### Eneco customers
+1. Go to `https://api.toon.eu/toonapi-accesstoken?tenant_id=eneco&client_id=CONSUMER_KEY` and replace `CONSUMER_KEY` with the "Consumer Key" you wrote down before.
+2. Log in with your Mijn Eneco account.
+3. A page is shown containing an "Access token".
+4. Add the following Toon configuration to your {% term "`configuration.yaml`" %} and restart Home Assistant.
+
+```yaml
+# Example configuration.yaml entry
+toon:
+  access_token: YOUR_ACCESS_TOKEN
+```
+
+### Other customers
+Add the following Toon configuration to your {% term "`configuration.yaml`" %} and restart Home Assistant.
 
 ```yaml
 # Example configuration.yaml entry
@@ -67,12 +83,16 @@ toon:
 
 {% configuration %}
 client_id:
-  description: Toon API Consumer Key.
-  required: true
+  description: Toon API Consumer Key. Required if not an Eneco customer.
+  required: false
   type: string
 client_secret:
-  description: Toon API Consumer Secret.
-  required: true
+  description: Toon API Consumer Secret. Required if not an Eneco customer.
+  required: false
+  type: string
+access_token:
+  description Toon API access token. Required if an Eneco customer.
+  required: false
   type: string
 {% endconfiguration %}
 
